@@ -1,9 +1,11 @@
-var WebSocketServer = require('ws').Server;
-var http = require('http');
-var express = require('express');
+var server = require('http').createServer();
 var url = require('url');
-
+var WebSocketServer = require('ws').Server;
+var wss = new WebSocketServer({ server: server });
+var express = require('express');
 var app = express();
+var port = 4080;
+
 app.set('port', (process.env.PORT || 3000));
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
@@ -11,13 +13,9 @@ app.use(express.static(__dirname + '/public'));
 app.get('/', function(request, response) {
   response.render('pages/index');
 });
-
-
-var server = http.createServer(app);
-var port = 4080;
-server.on('request', app);
-server.listen(port);
-console.log("http server listening on %d", port);
+app.use(function (req, res) {
+  res.send({ msg: "hello" });
+});
 
 var wss = new WebSocketServer({ server: server });
 wss.on('connection', function(ws) {
@@ -93,6 +91,10 @@ wss.on('connection', function(ws) {
 });
 
 console.log("websocket server created");
+server.on('request', app);
+server.listen(port, function() {
+  console.log('Listening on ' + server.address().port);
+});
 
 
 // var server = require('http').createServer();
