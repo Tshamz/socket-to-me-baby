@@ -27,5 +27,6 @@ build/Release
 node_modules
 
 # User
+*.DS_Store*
 dev/
 Gulpfile.js

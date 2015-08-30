@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+  <% include ../partials/head.ejs %>
+</head>
+<body>
+  <svg height="100" width="100" viewBox="0 0 50 50" style="display:none;">
+    <defs>
+      <g id="player-token-X">
+        <line x1="2" y1="2" x2="48" y2="48" stroke="black" stroke-width="1" />
+        <line x1="48" y1="2" x2="2" y2="48" stroke="black" stroke-width="1" />
+      </g>
+      <circle id="player-token-O" cx="25" cy="25" r="23" fill="transparent" stroke="black" stroke-width="1" />
+    </defs>
+  </svg>
+
+  <% include ../partials/header.ejs %>
+
+  <main class="gamearea container">
+    <% include ../partials/title-cards.ejs %>
+    <% include ../partials/gameboard.ejs %>
+  </main>
+
+  <% include ../partials/footer-scripts.ejs %>
+
+</body>
+</html>
