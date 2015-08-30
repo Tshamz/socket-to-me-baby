@@ -44,6 +44,9 @@ var browswerSyncConfig = {
 };
 
 gulp.task('browser-sync', function() {
+  if (!argv.env) {
+    return false;
+  }
   var bsConfig = browswerSyncConfig.server;
   if (argv.env === 'client') {
     bsConfig = browswerSyncConfig.client;
