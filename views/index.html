@@ -97,17 +97,6 @@
     </article>
   </main>
 
-  <script type="text/javascript">
-    var host = location.origin.replace(/^http/, 'ws')
-    var ws = new WebSocket(host);
-    ws.onmessage = function (event) {
-      var li = document.createElement('li');
-      li.innerHTML = JSON.parse(event.data);
-      document.querySelector('#pings').appendChild(li);
-    };
-  </script>
-
-  <!--script src="//cdn.socket.io/socket.io-1.2.0.js"></script-->
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="scripts/main.js"></script>
 

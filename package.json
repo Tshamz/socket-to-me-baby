@@ -38,7 +38,7 @@
   "dependencies": {
     "ejs": "^2.3.1",
     "express": "~4.9.x",
-    "ws": "0.4.x"
+    "ws": "^0.4.32"
   },
   "repository": {
     "type": "git",

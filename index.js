@@ -1,77 +1,33 @@
-// var express     = require('express');
-// var app         = express();
-// var server      = require('http').Server(app);
-// var io          = require('socket.io').listen(server);
-
-var WebSocketServer = require("ws").Server;
-var http = require("http");
-var express = require("express");
-var app = express();
+var WebSocketServer = require('ws').Server;
+var http = require('http')
+var express = require('express');
+var url = require('url');
 var port = process.env.PORT || 5000;
 
+var app = express();
 app.use(express.static(__dirname + '/public'));
+app.listen(80); //port 80 need to run as root
+console.log("app listening on %d ", 80);
 
 var server = http.createServer(app);
+server.on('request', app);
 server.listen(port);
-
 console.log("http server listening on %d", port);
 
-var wss = new WebSocketServer({server: server});
-console.log("websocket server created");
+var wss = new WebSocketServer({ server: server });
+wss.on('connection', function(ws) {
+  console.info("websocket connection open");
 
-wss.on("connection", function(ws) {
-  var id = setInterval(function() {
-    ws.send(JSON.stringify(new Date()), function() {  });
-  }, 1000);
+  var location = url.parse(ws.upgradeReq.url, true);
+  // you might use location.query.access_token to authenticate or share sessions
+  // or ws.upgradeReq.headers.cookie (see http://stackoverflow.com/a/16395220/151312)
 
-  console.log("websocket connection open");
-
-  ws.on("close", function() {
-    console.log("websocket connection close");
-    clearInterval(id);
-  });
-});
-
-// app.set('port', (process.env.PORT || 3000));
-
-// app.set('views', __dirname + '/views');
-// app.set('view engine', 'ejs');
-// app.use(express.bodyParser());
-// app.use(express.methodOverride());
-// app.use(app.router);
-// app.use(express.static(__dirname + '/public'));
-
-// app.get('/', function(request, response) {
-//   response.render('pages/index');
-// });
-
-// app.listen(app.get('port'), function() {
-//   console.log('Node app is running on port', app.get('port'));
-// });
-
-// app.use(express.static('public'));
-// app.get('/', function (req, res) {
-//   res.sendFile(__dirname + '/index.html');
-// });
-
-io.on('connection', function(socket) {
   var turn = 0;
   var boardState = {
     'a': [null, null, null],
     'b': [null, null, null],
     'c': [null, null, null]
   };
-
-  socket.on('turnStart', function(move) {
-    turn++;
-    var token = (turn%2 === 1) ? 'X':'O';
-    boardState[move.row][move.col] = token;
-    if (turn >= 5) {
-      checkForWinner(token);
-    }
-    socket.emit('turnFinish', {'token': token, 'row': move.row, 'col': move.col});
-  });
-
   var checkForWinner = function(token) {
     checkRows(token);
     checkCols(token);
@@ -84,7 +40,7 @@ io.on('connection', function(socket) {
       boardState[row].every(function(value, index) {
         if (value === token) {
           if (count === 2) {
-            socket.emit('winner', token);
+            ws.send(token);
           } else {
             count++;
           }
@@ -99,7 +55,7 @@ io.on('connection', function(socket) {
     for (var i = 0; i < 3; i++) {
       if (boardState.a[i] !== null) {
         if (boardState.a[i] === boardState.b[i] && boardState.b[i] === boardState.c[i]) {
-          socket.emit('winner', token);
+          ws.send(token);
         }
       }
     }
@@ -108,13 +64,27 @@ io.on('connection', function(socket) {
   var checkDiag = function(token) {
     if (boardState.a[0]) {
       if (boardState.a[0] === boardState.b[1] && boardState.b[1] === boardState.c[2]) {
-        socket.emit('winner', token);
+        ws.send(token);
       }
     }
     if (boardState.a[2]) {
       if (boardState.a[2] === boardState.b[1] && boardState.b[1] === boardState.c[0]) {
-        socket.emit('winner', token);
+        ws.send(token);
       }
     }
   };
+
+  ws.on('message', function(message) {
+    console.log(message);
+
+    turn++;
+    var token = (turn%2 === 1) ? 'X':'O';
+    boardState[move.row][move.col] = token;
+    if (turn >= 5) {
+      checkForWinner(token);
+    }
+    ws.send({'token': token, 'row': move.row, 'col': move.col});
+  });
 });
+
+console.log("websocket server created");
