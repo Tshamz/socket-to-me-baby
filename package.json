@@ -15,7 +15,7 @@
     "start": "node index.js"
   },
   "engines": {
-    "node": ">= 0.10.33"
+    "node": "0.12.2"
   },
   "devDependencies": {
     "browser-sync": "^2.7.6",
