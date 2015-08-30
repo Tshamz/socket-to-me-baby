@@ -10,7 +10,7 @@
   ],
   "license": "MIT",
   "author": "Tyler Shambora",
-  "main": "index.js",
+  "main": "index.htmls",
   "scripts": {
     "start": "node index.js"
   },
