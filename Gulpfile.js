@@ -61,7 +61,7 @@ gulp.task('styles', function() {
     .pipe(sourcemaps.init())
     .pipe(sass({ errLogToConsole: true }))
     .pipe(autoprefixer({ browsers: ['last 2 versions', 'ie >= 10'] }))
-    .pipe(cssmin())
+    // .pipe(cssmin())
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('public/styles/'))
     .pipe(reload({ stream:true }));
@@ -72,7 +72,7 @@ gulp.task('scripts', function() {
     .pipe(plumber(plumberErrorHandler))
     .pipe(sourcemaps.init())
     .pipe(concat('main.js'))
-    .pipe(uglify())
+    // .pipe(uglify())
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('public/scripts/'))
     .pipe(reload({ stream:true }));
@@ -94,37 +94,29 @@ gulp.task('copy', function() {
 });
 
 gulp.task('server', function() {
-  return gulp.src(['dev/scripts/server/*.js'])
+  return gulp.src(['dev/scripts/server/index.js'])
     .pipe(plumber(plumberErrorHandler))
     .pipe(sourcemaps.init())
     .pipe(concat('index.js'))
-    .pipe(uglify())
+    // .pipe(uglify())
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('./'))
     .pipe(reload({ stream:true }));
 });
 
-gulp.task('react', function() {
-  return gulp.src(['dev/scripts/**/*.jsx'])
-    .pipe(plumber(plumberErrorHandler))
-    .pipe(react())
-    .pipe(gulp.dest('dev/scripts/'));
-});
-
 gulp.task('clean', function(cb) {
-    del(['./index.js', 'public/'], cb);
+    del(['./index.js', 'public/', 'views/'], cb);
 });
 
 gulp.task('build', ['clean'], function(cb) {
-  runsequence(['copy', 'server', 'react', 'styles', 'scripts', 'imagemin'], cb);
+  runsequence(['copy', 'server', 'styles', 'scripts', 'imagemin'], cb);
 });
 
 gulp.task('watch', ['build'], function() {
-  gulp.watch(['dev/scripts/**/*.js'], ['scripts']);
-  gulp.watch(['dev/scripts/**/*.jsx'], ['react']);
   gulp.watch(['dev/styles/**/*.scss'], ['styles']);
-  gulp.watch(['dev/assets/*'], ['assets']);
-  gulp.watch(['dev/*.html', 'dev/index.js'], ['copy']);
+  gulp.watch(['dev/scripts/**/*.js'], ['scripts']);
+  gulp.watch(['dev/images/*'], ['imagemin']);
+  gulp.watch(['dev/markup/**/*'], ['copy']);
   gulp.watch(['dev/scripts/server/index.js'], ['server']);
 });
 

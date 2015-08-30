@@ -8,17 +8,13 @@ app.set('port', (process.env.PORT || 3000));
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/public'));
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(app.router);
 app.get('/', function(request, response) {
   response.render('pages/index');
 });
-app.listen(app.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
-});
+
 
 var server = http.createServer(app);
+var port = 4080;
 server.on('request', app);
 server.listen(port);
 console.log("http server listening on %d", port);
