@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+  <title>Socket-To-Me Baby!</title>
+
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link href='http://fonts.googleapis.com/css?family=Great+Vibes|Source+Sans+Pro:200,700,400italic,600italic,700italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <svg height="100" width="100" viewBox="0 0 50 50" style="display:none;">
+    <defs>
+      <g id="player-token-X">
+        <line x1="2" y1="2" x2="48" y2="48" stroke="black" stroke-width="1" />
+        <line x1="48" y1="2" x2="2" y2="48" stroke="black" stroke-width="1" />
+      </g>
+      <circle id="player-token-O" cx="25" cy="25" r="23" fill="transparent" stroke="black" stroke-width="1" />
+    </defs>
+  </svg>
+
+  <header class="site-identity container">
+    <img class="identity-logo-image" src="images/logo-image.png" alt="old timey lady pointing" />
+    <h1 class="identity-title">
+      <div class="tic-tac">Tic-Tac-Toe?</div>
+      <div class="oh-no with-attitude">Tic-Tac-Yeeah!</div>
+      <div class="identity-tagline">Bringing an all-time classic into the 21st century</div>
+    </h1>
+  </header>
+
+  <main class="gamearea container">
+    <header class="fight-card container">
+      <div class="home team">
+        <h2 class="team-prefix">The Egregious</h2>
+        <div class="pluralize">
+          <svg height="80" width="80" viewBox="0 0 50 50">
+            <use xlink:href="#player-token-X"></use>
+          </svg>
+        </div>
+      </div>
+      <div class="versus">vs.</div>
+      <div class="away team">
+        <h2 class="team-prefix">The Awful</h2>
+        <div class="pluralize">
+          <svg height="80" width="80" viewBox="0 0 50 50">
+            <use xlink:href="#player-token-O"></use>
+          </svg>
+        </div>
+      </div>
+    </header>
+    <article class="gameboard container">
+      <svg viewBox="0 0 300 300">
+        <g id="a0">
+          <use x="22.5" y="22.5" height="70" width="70" xlink:href=""></use>
+          <rect x="0" y="0" height="100" width="100" fill="transparent"/>
+        </g>
+        <g id="a1">
+          <use x="122.5" y="22.5" height="70" width="70" xlink:href=""></use>
+          <rect x="100" y="0" height="100" width="100" fill="transparent" />
+        </g>
+        <g id="a2">
+          <use x="222.5" y="22.5" height="70" width="70" xlink:href=""></use>
+          <rect x="200" y="0" height="100" width="100" fill="transparent" />
+        </g>
+        <g id="b0">
+          <use x="22.5" y="122.5" height="70" width="70" xlink:href=""></use>
+          <rect x="0" y="100" height="100" width="100" fill="transparent" />
+        </g>
+        <g id="b1">
+          <use x="122.5" y="122.5" height="70" width="70" xlink:href=""></use>
+          <rect x="100" y="100" height="100" width="100" fill="transparent" />
+        </g>
+        <g id="b2">
+          <use x="222.5" y="122.5" height="70" width="70" xlink:href=""></use>
+          <rect x="200" y="100" height="100" width="100" fill="transparent" />
+        </g>
+        <g id="c0">
+          <use x="22.5" y="222.5" height="70" width="70" xlink:href=""></use>
+          <rect x="0" y="200" height="100" width="100" fill="transparent" />
+        </g>
+        <g id="c1">
+          <use x="122.5" y="222.5" height="70" width="70" xlink:href=""></use>
+          <rect x="100" y="200" height="100" width="100" fill="transparent" />
+        </g>
+        <g id="c2">
+          <use x="222.5" y="222.5" height="70" width="70" xlink:href=""></use>
+          <rect x="200" y="200" height="100" width="100" fill="transparent" />
+        </g>
+        <line x1="100" y1="10"  x2="100" y2="295" stroke="black" stroke-width="1" />
+        <line x1="200" y1="10"  x2="200" y2="295" stroke="black" stroke-width="1" />
+        <line x1="10"  y1="100" x2="295" y2="100" stroke="black" stroke-width="1" />
+        <line x1="10"  y1="200" x2="295" y2="200" stroke="black" stroke-width="1" />
+      </svg>
+    </article>
+  </main>
+
+  <script src="//cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="scripts/main.js"></script>
+
+</body>
+</html>

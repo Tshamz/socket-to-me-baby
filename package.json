@@ -1,0 +1,46 @@
+{
+  "name": "Socket-To-Me",
+  "version": "0.1.0",
+  "description": "Tic Tac Toe using websockets a.k.a. Socket-To-Me, huehuehue",
+  "keywords": [
+    "node",
+    "socket.io",
+    "svg",
+    "heroku"
+  ],
+  "license": "MIT",
+  "author": "Tyler Shambora",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": ">= 0.10.33"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.7.6",
+    "del": "^1.2.0",
+    "gulp": "^3.8.11",
+    "gulp-autoprefixer": "^2.3.0",
+    "gulp-changed": "^1.3.0",
+    "gulp-concat": "^2.5.2",
+    "gulp-imagemin": "^2.3.0",
+    "gulp-minify-css": "^1.2.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-plumber": "^1.0.1",
+    "gulp-react": "^3.0.1",
+    "gulp-sass": "^2.0.1",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.2.0",
+    "run-sequence": "^1.1.2",
+    "yargs": "^3.15.0"
+  },
+  "dependencies": {
+    "express": "^4.10.2",
+    "socket.io": "^1.3.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tshamz/socket-to-me-baby"
+  }
+}

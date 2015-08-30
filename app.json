@@ -1,0 +1,7 @@
+{
+  "name": "Tic Tac Toh-No-You-Didn't",
+  "description": "An updated approach to a classic",
+  "repository": "https://github.com/Tshamz/socket-to-me-baby.git",
+  "logo": "http://tylershambora.com/html/images/logo-image.png",
+  "keywords": ["node", "socket.io", "svg", "heroku"]
+}
