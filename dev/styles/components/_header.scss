@@ -1,0 +1,42 @@
+.site-identity {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  padding-top: $size-3;
+  padding-bottom: $size-3;
+  margin-bottom: $size-6;
+  border-bottom: 1px solid $black;
+}
+
+.identity-logo-image {
+  margin-right: 0.25rem;
+  height: 9.5rem;
+}
+
+.identity-title {
+  display: flex;
+  flex-flow: column nowrap;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: $size-9;
+  text-transform: uppercase;
+  .tic-tac,
+  .oh-no {
+    line-height: 0.9;
+  }
+  .oh-no {
+    letter-spacing: -1px;
+    padding-left: 1.8rem;
+    &.with-attitude {
+      font-style: italic;
+    }
+  }
+}
+
+.identity-tagline {
+  display: block;
+  padding-left: 2.2rem;
+  font-size: $size-3;
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: 1.1px;
+}

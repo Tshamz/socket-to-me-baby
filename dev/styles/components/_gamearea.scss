@@ -1,0 +1,52 @@
+.fight-card {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $size-2;
+}
+
+.team {
+  text-align: center;
+  flex-basis: 33%;
+}
+
+.team-prefix {
+  font-family: 'Great Vibes', cursive;
+  font-size: $size-8;
+  font-weight: 400;
+  text-transform: lowercase;
+  margin-bottom: $size-3;
+}
+
+.pluralize {
+  position: relative;
+  display: inline-block;
+  &::after {
+    content: "'s";
+    position: absolute;
+    bottom: 0;
+    right: -1.75rem;
+    font-size: 2.5rem;
+    line-height: 1;
+    font-weight: 200;
+  }
+}
+
+.versus {
+  font-size: $size-6;
+  font-weight: 500;
+}
+
+.gameboard rect {
+  cursor: pointer;
+}
+
+.winner-winner-whats-for-dinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 15rem;
+  white-space: nowrap;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}

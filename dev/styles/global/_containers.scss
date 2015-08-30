@@ -1,0 +1,16 @@
+.fight-card.container,
+.gameboard.container {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.fight-card.container {
+  max-width: 42.5rem;
+}
+
+.gameboard.container {
+  position: relative;
+  padding-right: 2.5rem;
+  padding-left: 2.5rem;
+  max-width: 40rem;
+}
