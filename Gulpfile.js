@@ -4,12 +4,12 @@ var sass            = require('gulp-sass');
 var cssmin          = require('gulp-minify-css');
 var concat          = require('gulp-concat');
 var uglify          = require('gulp-uglify');
-var react           = require('gulp-react');
 var notify          = require('gulp-notify');
 var plumber         = require('gulp-plumber');
 var imagemin        = require('gulp-imagemin');
 var sourcemaps      = require('gulp-sourcemaps');
 var autoprefixer    = require('gulp-autoprefixer');
+var nodemon         = require('gulp-nodemon');
 
 var del             = require('del');
 var argv            = require('yargs').argv;
@@ -24,37 +24,35 @@ var plumberErrorHandler = {
   })
 };
 
-var browswerSyncConfig = {
-  client: {
-    server: {
-      baseDir: ['deploy']
-    },
-    host: 'localhost',
-    port: 1337,
-    files: [ 'deploy/*.html', 'deploy/public/styles/*.css', 'deploy/public/scripts/*.js'],
-    browser: 'google chrome',
-    notify: false
-  },
-  server: {
-    proxy: "localhost:3000",
-    files: [ 'deploy/*.html', 'deploy/*.js', 'deploy/public/styles/*.css', 'deploy/public/scripts/*.js'],
-    browser: 'google chrome',
-    notify: false
-  }
-};
+var BROWSER_SYNC_RELOAD_DELAY = 500;
 
-gulp.task('browser-sync', function() {
-  if (!argv.env) {
-    return false;
-  }
-  var bsConfig = browswerSyncConfig.server;
-  if (argv.env === 'client') {
-    bsConfig = browswerSyncConfig.client;
-  }
-  browserSync(bsConfig, function(err, bs) {
-    if (!err) {
-      console.log('Congratulations, you\'ve won!');
-    }
+gulp.task('nodemon', ['watch'], function (cb) {
+  var called = false;
+  return nodemon({
+    script: 'index.js',
+    watch: ['index.js']
+  })
+    .on('start', function() {
+      if (!called) {cb();}
+      called = true;
+    })
+    .on('restart', function() {
+      setTimeout(function() {
+        browserSync.reload({stream: false});
+      }, BROWSER_SYNC_RELOAD_DELAY);
+    });
+});
+
+gulp.task('browser-sync', ['nodemon'], function () {
+  browserSync.init({
+    files: ['public/**/*.*', 'views/**/*.ejs'],
+    proxy: {
+      target: 'http://localhost:3000',
+      we: true
+    },
+    serveStatic: ['public/scripts', 'public/styles'],
+    port: 4000,
+    browser: ['google-chrome']
   });
 });
 
@@ -64,10 +62,9 @@ gulp.task('styles', function() {
     .pipe(sourcemaps.init())
     .pipe(sass({ errLogToConsole: true }))
     .pipe(autoprefixer({ browsers: ['last 2 versions', 'ie >= 10'] }))
-    // .pipe(cssmin())
+    .pipe(cssmin())
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('public/styles/'))
-    .pipe(reload({ stream:true }));
+    .pipe(gulp.dest('public/styles/'));
 });
 
 gulp.task('scripts', function() {
@@ -75,40 +72,33 @@ gulp.task('scripts', function() {
     .pipe(plumber(plumberErrorHandler))
     .pipe(sourcemaps.init())
     .pipe(concat('main.js'))
-    // .pipe(uglify())
+    .pipe(uglify())
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('public/scripts/'))
-    .pipe(reload({ stream:true }));
+    .pipe(gulp.dest('public/scripts/'));
 });
 
 gulp.task('imagemin', function() {
   return gulp.src(['dev/images/*'])
-    .pipe(changed('public/images'))
+    .pipe(changed('public/images/'))
     .pipe(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true }))
-    .pipe(gulp.dest('public/images'));
+    .pipe(gulp.dest('public/images/'));
 });
 
 gulp.task('copy', function() {
-  return gulp.src(['dev/markup/**/*'], {base: 'dev/markup'})
+  return gulp.src(['dev/markup/**/*.ejs'], {base: 'dev/markup'})
     .pipe(plumber(plumberErrorHandler))
     .pipe(changed('views/'))
-    .pipe(gulp.dest('views/'))
-    .pipe(reload({ stream:true }));
+    .pipe(gulp.dest('views/'));
 });
 
 gulp.task('server', function() {
   return gulp.src(['dev/scripts/server/index.js'])
     .pipe(plumber(plumberErrorHandler))
-    .pipe(sourcemaps.init())
-    .pipe(concat('index.js'))
-    // .pipe(uglify())
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./'))
-    .pipe(reload({ stream:true }));
+    .pipe(gulp.dest('./'));
 });
 
 gulp.task('clean', function(cb) {
-    del(['./index.js', 'public/', 'views/'], cb);
+    del(['index.js', 'public/', 'views/'], cb);
 });
 
 gulp.task('build', ['clean'], function(cb) {
@@ -117,10 +107,10 @@ gulp.task('build', ['clean'], function(cb) {
 
 gulp.task('watch', ['build'], function() {
   gulp.watch(['dev/styles/**/*.scss'], ['styles']);
-  gulp.watch(['dev/scripts/**/*.js'], ['scripts']);
+  gulp.watch(['dev/scripts/modules/*.js', 'dev/scripts/init.js'], ['scripts']);
   gulp.watch(['dev/images/*'], ['imagemin']);
   gulp.watch(['dev/markup/**/*'], ['copy']);
   gulp.watch(['dev/scripts/server/index.js'], ['server']);
 });
 
-gulp.task('default', ['clean', 'build', 'watch', 'browser-sync']);
+gulp.task('default', ['clean', 'build', 'watch', 'nodemon', 'browser-sync']);

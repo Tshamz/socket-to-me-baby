@@ -1,18 +1,18 @@
 (function(Messages, $, undefined) {
 
   // Private
-  var $body = $('body');
+  var host = location.origin.replace(/^http/, 'ws');
+  var ws = new WebSocket(host);
 
-
-  var bindUIActions = function() {
-    // $body.click(function() {
-    //   $body.hide();
-    // });
+  ws.onmessage = function(message) {
+    var parsedMessage = JSON.parse(message.data);
+    Gameplay[parsedMessage.eventType](parsedMessage);
   };
 
   // Public
-  Messages.init = function() {
-    bindUIActions();
+  Messages.sendMessage = function(data) {
+    var serializedData = JSON.stringify(data);
+    ws.send(serializedData);
   };
 
 }(window.Messages = window.Messages || {}, jQuery));
