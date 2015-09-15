@@ -1,3 +1,5 @@
+![Oh no you didn't](http://socket-to-me.herokuapp.com/images/logo-image.png)
+
 # socket-to-me-baby
 Tic-Tac-Toe using websockets
 
