@@ -1,6 +1,7 @@
 ####### wip
 
-![Oh no you didn't](http://socket-to-me.herokuapp.com/images/logo-image.png)
+
+<img src='https://raw.githubusercontent.com/tshamz/socket-to-me-baby/master/public/images/logo-image.png?token=AB-qQI2ELINqDzp0Wt_BCXoVvdJc5OJxks5XpCT9wA%3D%3D'>
 
 **tic-tac-toh no you didn't**
 
