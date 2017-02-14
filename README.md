@@ -1,9 +1,6 @@
-#THIS IS BROKEN AND DOESN'T WORK. 
-#PROCEED AT YOUR OWN RISK!
+#THIS IS BROKEN AND DOESN'T WORK.<br>PROCEED AT YOUR OWN RISK!
 
-<p align="center">
-  <img src='https://github.com/tshamz/socket-to-me-baby/raw/master/public/images/logo-image.png'>
-</p>
+<img src='https://github.com/tshamz/socket-to-me-baby/raw/master/public/images/logo-image.png'>
 
 **tic-tac-toh no you didn't**
 
