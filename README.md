@@ -1,7 +1,6 @@
-####### wip
+#THIS IS BROKEN AND DOESN'T WORK. PROCEED AT YOUR OWN RISK!
 
-
-<img src='https://raw.githubusercontent.com/tshamz/socket-to-me-baby/master/public/images/logo-image.png?token=AB-qQI2ELINqDzp0Wt_BCXoVvdJc5OJxks5XpCT9wA%3D%3D'>
+<img src='https://github.com/tshamz/socket-to-me-baby/raw/master/public/images/logo-image.png'>
 
 **tic-tac-toh no you didn't**
 
